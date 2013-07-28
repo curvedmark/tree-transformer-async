@@ -1,0 +1,35 @@
+{
+  "name": "tree-transformer-async",
+  "version": "0.1.0",
+  "description": "Transform nodes in the tree asynchronously and sequentially",
+  "main": "TransformerAsync.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/curvedmark/tree-transformer-async.git"
+  },
+  "keywords": [
+    "ast",
+    "tree",
+    "transformer",
+    "async",
+    "compiler"
+  ],
+  "author": "Glen Huang <curvedmark@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/curvedmark/tree-transformer-async/issues"
+  },
+  "dependencies": {
+    "tree-visitor-async": "*",
+    "tree-transformer": "*"
+  },
+  "devDependencies": {
+    "mocha": "1.x"
+  }
+}
