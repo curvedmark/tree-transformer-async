@@ -1,6 +1,6 @@
 {
   "name": "tree-transformer-async",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Transform nodes in the tree asynchronously and sequentially",
   "main": "TransformerAsync.js",
   "directories": {
@@ -30,6 +30,7 @@
     "tree-transformer": "*"
   },
   "devDependencies": {
-    "mocha": "1.x"
+    "mocha": "1.x",
+    "mocha-as-promised": "1.x"
   }
 }

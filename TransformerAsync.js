@@ -8,23 +8,21 @@ function TransformerAsync(actions) {
 }
 TransformerAsync.prototype = Object.create(VisitorAsync.prototype);
 
-TransformerAsync.prototype._visitNodes = function (nodes, done) {
+TransformerAsync.prototype._visitNodes = function (nodes) {
 	var self = this;
-	visitNodesFrom(0);
+	return visitNodesFrom(0);
 
 	function visitNodesFrom(i) {
-		if (i >= nodes.length) return done(null, nodes);
-		self._visitNode(nodes[i], function (err, ret) {
-			if (err) return done(err);
+		if (i >= nodes.length) return self._visitNode().then(function () { return nodes });
+		return self._visitNode(nodes[i]).then(function (ret) {
 			i = Transformer.replaceNode(ret, i, nodes);
-			visitNodesFrom(i);
+			return visitNodesFrom(i);
 		});
 	}
 };
 
-TransformerAsync.prototype._visitNode = function (node, done) {
-	VisitorAsync.prototype._visitNode.call(this, node, function (err, ret) {
-		if (err) return done(err);
-		done(null, ret === undefined ? node : ret);
+TransformerAsync.prototype._visitNode = function (node) {
+	return VisitorAsync.prototype._visitNode.call(this, node).then(function (ret) {
+		return ret === undefined ? node : ret;
 	});
 };
