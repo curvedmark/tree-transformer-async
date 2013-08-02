@@ -7,7 +7,7 @@ describe("TransformerAsync", function () {
 		it("should return action's returning value", function () {
 			var node = { type: 'number', value: 1 };
 			return new TransformerAsync({
-				number: function (transformer, number) {
+				number: function (number) {
 					return 1;
 				}
 			}).visit(node).then(function (result) {
@@ -18,7 +18,7 @@ describe("TransformerAsync", function () {
 		it("should return null", function () {
 			var node = { type: 'number', value: 1 };
 			return new TransformerAsync({
-				number: function (transformer, number) {
+				number: function (number) {
 					return null;
 				}
 			}).visit(node).then(function (result) {
@@ -29,7 +29,7 @@ describe("TransformerAsync", function () {
 		it("should ignore undefined", function () {
 			var node = { type: 'number', value: 1 };
 			return new TransformerAsync({
-				node: function (transformer, node) {}
+				node: function (node) {}
 			}).visit(node).then(function (result) {
 				assert.equal(result, node);
 			});
@@ -43,7 +43,7 @@ describe("TransformerAsync", function () {
 				{ type: 'string', value: 'abc' }
 			];
 			return new TransformerAsync({
-				node: function (transformer, node) {
+				node: function (node) {
 					return node.value;
 				}
 			}).visit(nodes).then(function (result) {
@@ -57,7 +57,7 @@ describe("TransformerAsync", function () {
 				{ type: 'number', value: 3 }
 			];
 			return new TransformerAsync({
-				number: function (transformer, number) {
+				number: function (number) {
 					return [number.value, number.value + 1];
 				}
 			}).visit(nodes).then(function (result) {
@@ -71,7 +71,7 @@ describe("TransformerAsync", function () {
 				{ type: 'string', value: 'abc' }
 			];
 			return new TransformerAsync({
-				number: function (transformer, number) {
+				number: function (number) {
 					return null;
 				}
 			}).visit(nodes).then(function (result) {
@@ -85,7 +85,7 @@ describe("TransformerAsync", function () {
 				{ type: 'string', value: 'abc' }
 			];
 			return new TransformerAsync({
-				number: function (transformer, number) {}
+				number: function (number) {}
 			}).visit(nodes).then(function (result) {
 				assert.deepEqual(result, [
 					{ type: 'number', value: 1 },
