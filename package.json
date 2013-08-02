@@ -1,6 +1,6 @@
 {
   "name": "tree-transformer-async",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Transform nodes in the tree asynchronously and sequentially",
   "main": "TransformerAsync.js",
   "directories": {
