@@ -6,7 +6,7 @@ module.exports = TransformerAsync;
 
 function TransformerAsync() {}
 
-TransformerAsync.prototype = Object.create(Transformer.prototype);
+TransformerAsync.prototype = new Transformer();
 
 TransformerAsync.prototype._visitNodes = function (nodes) {
 	var self = this;
@@ -24,7 +24,6 @@ TransformerAsync.prototype._visitNodes = function (nodes) {
 	}
 };
 
-var _visitNode = Transformer.prototype._visitNode;
 TransformerAsync.prototype._visitNode = function (node) {
 	var promise = new Promise().fulfill(undefined, this);
 	return promise.then(function () {
