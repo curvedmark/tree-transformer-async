@@ -2,7 +2,7 @@
 
 Transform nodes in the tree asynchronously and sequentially.
 
-Asynchronous version of [Tree Transformer](https://github.com/curvedmark/tree-transformer). Like [Tree Visitor Async](https://github.com/curvedmark/tree-visitor-async).
+Asynchronous version of [Tree Transformer](https://github.com/curvedmark/tree-transformer). Actions can return a promise and `.visit()` returns a promise.
 
 ## Example
 
@@ -10,22 +10,23 @@ Asynchronous version of [Tree Transformer](https://github.com/curvedmark/tree-tr
 var fs = require('fs');
 var Q = require('q');
 var TransformerAsync = require('tree-transformer-async');
-
 var nodes = [
 	{ type: 'import', value: 'path/to/file1' },
 	{ type: 'import', value: 'path/to/file2' },
 ];
-var transformerAsync = new TransformerAsync({
-	import: function (visitor, importNode, done) {
-		var deferred = Q.defer();
-		fs.readFile(importNode.value, 'utf8', function (err, content) {
-			if (err) return deferred.reject(err);
-			deferred.resolve(content);
-		});
-		return deferred.promise;
-	}
-});
-transformerAsync.visit(nodes).then(function (result) {
+
+function MyVisitorAsync() {}
+MyVisitorAsync.prototype = new VisitorAsync();
+
+MyVisitorAsync.prototype.visit_import = function (importNode) {
+	var deferred = Q.defer();
+	fs.readFile(importNode.value, 'utf8', deferred.makeNodeResolver());
+	return deferred.promise.then(function (content) {
+		return content;
+	});
+};
+
+new MyVisitorAsync().visit(nodes).then(function (result) {
 	console.log(result); // [content of file1, content of file2]
 });
 ```

@@ -26,8 +26,8 @@
     "url": "https://github.com/curvedmark/tree-transformer-async/issues"
   },
   "dependencies": {
-    "tree-visitor-async": "*",
-    "tree-transformer": "*"
+    "tree-transformer": "*",
+    "promise-now": "*"
   },
   "devDependencies": {
     "mocha": "1.x",
