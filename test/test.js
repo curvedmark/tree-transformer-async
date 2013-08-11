@@ -1,4 +1,5 @@
 var assert = require('assert');
+var Promise = require('promise-now');
 var TransformerAsync = require('../TransformerAsync');
 require("mocha-as-promised")();
 
@@ -41,6 +42,21 @@ describe("TransformerAsync", function () {
 			MyTransformerAsync.prototype = new TransformerAsync();
 
 			MyTransformerAsync.prototype.visit_node = function () {};
+
+			return new MyTransformerAsync().visit(node).then(function (ret) {
+				assert.equal(ret, node);
+			});
+		});
+
+		it("should ignore undefined contained in promise", function () {
+			var node = { type: 'number', value: 1 };
+
+			function MyTransformerAsync() {}
+			MyTransformerAsync.prototype = new TransformerAsync();
+
+			MyTransformerAsync.prototype.visit_node = function () {
+				return new Promise().fulfill();
+			};
 
 			return new MyTransformerAsync().visit(node).then(function (ret) {
 				assert.equal(ret, node);

@@ -1,19 +1,20 @@
 var Transformer = require('tree-transformer');
-var Promise = require('promise-now');
-var _visitNode = Transformer.prototype._visitNode;
+var VisitorAsync = require('tree-visitor-async');
+var _visitNode = VisitorAsync.prototype._visitNode;
 
 module.exports = TransformerAsync;
 
 function TransformerAsync() {}
 
-TransformerAsync.prototype = new Transformer();
+TransformerAsync.prototype = new VisitorAsync();
 
 TransformerAsync.prototype._visitNodes = function (nodes) {
 	var self = this;
 	return visitNodesFrom(0);
 
 	function visitNodesFrom(i) {
-		var promise = new Promise().fulfill(undefined, self);
+		var promise = _visitNode.call(self);
+
 		if (i >= nodes.length) return promise.then(function () { return nodes });
 		return promise.then(function () {
 			return _visitNode.call(this, nodes[i]);
@@ -25,8 +26,7 @@ TransformerAsync.prototype._visitNodes = function (nodes) {
 };
 
 TransformerAsync.prototype._visitNode = function (node) {
-	var promise = new Promise().fulfill(undefined, this);
-	return promise.then(function () {
-		return _visitNode.call(this, node);
+	return VisitorAsync.prototype._visitNode.call(this, node).then(function (ret) {
+		return ret === undefined ? node : ret;
 	});
 };

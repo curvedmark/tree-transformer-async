@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "tree-transformer": "*",
-    "promise-now": "*"
+    "tree-visitor-async": "*"
   },
   "devDependencies": {
     "mocha": "1.x",
