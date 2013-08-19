@@ -2,12 +2,13 @@
   "name": "tree-transformer-async",
   "version": "0.4.0",
   "description": "Transform nodes in the tree asynchronously and sequentially",
-  "main": "TransformerAsync.js",
+  "main": "lib/TransformerAsync.js",
   "directories": {
+    "lib": "lib",
     "test": "test"
   },
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --bail"
   },
   "repository": {
     "type": "git",
